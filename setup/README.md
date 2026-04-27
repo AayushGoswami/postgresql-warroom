@@ -58,5 +58,5 @@ This is the primary table for all incident simulations.
 
 - products: 100
 
-\- order\_events: 150,000
+- order_events: 150,000
 
