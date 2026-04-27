@@ -1,8 +1,8 @@
-\# Setup — Schema Design
+# Setup — Schema Design
 
 
 
-\## Why This Schema
+## Why This Schema
 
 This e-commerce order events database was designed to simulate
 
@@ -12,11 +12,11 @@ customers run on TimescaleDB.
 
 
 
-\## Tables
+## Tables
 
 
 
-\### customers
+### customers
 
 Holds 500 customers across 7 countries.
 
@@ -24,7 +24,7 @@ Used to simulate multi-region support scenarios.
 
 
 
-\### products
+### products
 
 100 products across 6 categories with varying prices.
 
@@ -32,31 +32,31 @@ Used for join-heavy analytical queries.
 
 
 
-\### order\_events (Hypertable)
+### order_events (Hypertable)
 
 Core time-series table — 150,000 events spanning 1 full year.
 
-Partitioned by event\_time into chunks by TimescaleDB.
+Partitioned by event_time into chunks by TimescaleDB.
 
 This is the primary table for all incident simulations.
 
 
 
-\## Design Decisions
+## Design Decisions
 
-\- order\_events uses TIMESTAMPTZ (timezone-aware) — best practice for time-series
+- order_events uses TIMESTAMPTZ (timezone-aware) — best practice for time-series
 
-\- Hypertable chunk interval defaults to 7 days — appropriate for this data volume
+- Hypertable chunk interval defaults to 7 days — appropriate for this data volume
 
-\- Indexes on status, region, customer\_id added for selective query testing
+- Indexes on status, region, customer_id added for selective query testing
 
 
 
-\## Row Counts
+## Row Counts
 
-\- customers: 500
+- customers: 500
 
-\- products: 100
+- products: 100
 
 \- order\_events: 150,000
 
