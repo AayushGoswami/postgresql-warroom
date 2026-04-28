@@ -1,8 +1,8 @@
-\# Incident 01 — Slow Query (Missing Index)
+# Incident 01 — Slow Query (Missing Index)
 
 
 
-\## Symptoms
+## Symptoms
 
 Customer reports a query filtering orders by status and region
 
@@ -10,61 +10,61 @@ is taking several seconds to return results. Dashboard is timing out.
 
 
 
-\## Environment
+## Environment
 
-\- Database: PostgreSQL 15 + TimescaleDB
+- Database: PostgreSQL 15 + TimescaleDB
 
-\- Table: order\_events (150,000 rows, hypertable)
+- Table: order_events (150,000 rows, hypertable)
 
-\- Query type: Filtered aggregation with GROUP BY
-
-
-
-\## Diagnosis Steps
+- Query type: Filtered aggregation with GROUP BY
 
 
 
-\### Step 1 — Run EXPLAIN ANALYZE on the reported query
+## Diagnosis Steps
+
+
+
+### Step 1 — Run EXPLAIN ANALYZE on the reported query
 
 ```sql
 
 EXPLAIN ANALYZE
 
-SELECT customer\_id, region, COUNT(\*), SUM(total\_amount), AVG(total\_amount)
+SELECT customer_id, region, COUNT(*), SUM(total_amount), AVG(total_amount)
 
-FROM order\_events
+FROM order_events
 
 WHERE status = 'completed' AND region = 'North'
 
-GROUP BY customer\_id, region
+GROUP BY customer_id, region
 
-ORDER BY SUM(total\_amount) DESC;
+ORDER BY SUM(total_amount) DESC;
 
 ```
 
 
 
-\### Step 2 — Observations from execution plan (BEFORE)
+### Step 2 — Observations from execution plan (BEFORE)
 
-\- Scan type: Seq Scan
+- Scan type: Seq Scan
 
-\- Planning time: 9.663 ms
+- Planning time: 9.663 ms
 
-\- Execution time: 87.994 ms
-
-
-
-\### Step 3 — Checked scan ratio
-
-\- Total rows in table: 150,000
-
-\- Rows matching the filter: 7430
-
-\- Efficiency: PostgreSQL scanned ALL rows to return only 7430 rows
+- Execution time: 87.994 ms
 
 
 
-\## Root Cause
+### Step 3 — Checked scan ratio
+
+- Total rows in table: 150,000
+
+- Rows matching the filter: 7430
+
+- Efficiency: PostgreSQL scanned ALL rows to return only 7430 rows
+
+
+
+## Root Cause
 
 No index existed on the `status` and `region` columns. PostgreSQL
 
@@ -74,13 +74,13 @@ matching records — extremely inefficient for selective filter queries.
 
 
 
-\## Resolution
+## Resolution
 
 Created a composite index covering both filter columns:
 
 ```sql
 
-CREATE INDEX idx\_status\_region ON order\_events(status, region);
+CREATE INDEX idx_status_region ON order_events(status, region);
 
 ```
 
@@ -90,33 +90,33 @@ the query always filters on both columns together.
 
 
 
-\### Results After Fix (AFTER)
+### Results After Fix (AFTER)
 
-\- Scan type: Bitmap Heap Scan
+- Scan type: Bitmap Heap Scan
 
-\- Planning time: 7.489 ms
+- Planning time: 7.489 ms
 
-\- Execution time: 17.796 ms
+- Execution time: 17.796 ms
 
-\- Performance improvement: 4x faster
-
-
-
-\## Prevention
-
-\- Always analyse query patterns before go-live
-
-\- Add indexes on columns used in WHERE clauses with high selectivity
-
-\- Use EXPLAIN ANALYZE during development, not after complaints arise
-
-\- Monitor pg\_stat\_statements for slow queries proactively
+- Performance improvement: 4x faster
 
 
 
-\## Files
+## Prevention
 
-\- screenshots/before.png — execution plan before indexing
+- Always analyse query patterns before go-live
 
-\- screenshots/after.png — execution plan after indexing
+- Add indexes on columns used in WHERE clauses with high selectivity
+
+- Use EXPLAIN ANALYZE during development, not after complaints arise
+
+- Monitor pg_stat_statements for slow queries proactively
+
+
+
+## Files
+
+- screenshots/before.png — execution plan before indexing
+
+- screenshots/after.png — execution plan after indexing
 
