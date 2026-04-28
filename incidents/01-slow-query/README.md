@@ -12,7 +12,7 @@ is taking several seconds to return results. Dashboard is timing out.
 
 ## Environment
 
-- Database: PostgreSQL 15 + TimescaleDB
+- Database: PostgreSQL 18 + TimescaleDB
 
 - Table: order_events (150,000 rows, hypertable)
 
