@@ -67,7 +67,7 @@ Result: Window B — UPDATE completed
 When two sessions hold locks each other needs, PostgreSQL 18
 automatically detects the cycle and cancels one transaction:
 
-```bash
+```
 ERROR:  deadlock detected
 DETAIL:  Process 2816 waits for ShareLock on transaction 1802; blocked by process 3129.
 Process 3129 waits for ShareLock on transaction 1803; blocked by process 2816.
