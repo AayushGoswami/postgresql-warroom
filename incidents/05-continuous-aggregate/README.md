@@ -24,7 +24,7 @@ settings.
 ```sql
 SELECT COUNT(*) FROM order_summary_hourly;
 ```
-Result: [your number — 0 before first refresh]
+Result: 0
 
 ### Step 2 — Check for existing refresh jobs
 ```sql
@@ -37,9 +37,9 @@ Finding: No refresh policy was configured — aggregate was created
 with no automated refresh schedule.
 
 ### Step 3 — Verify lag by comparing raw vs aggregate counts
-- Raw order_events count: [your number]
-- Aggregate order_count sum: [your number]
-- Discrepancy: [difference] rows not yet reflected
+- Raw order_events count: 205000
+- Aggregate order_count sum: 200000
+- Discrepancy: 5000 rows not yet reflected
 
 ## Version Note
 In this TimescaleDB version, job run history is stored separately
@@ -59,7 +59,7 @@ view to remain permanently stale after initial creation.
 ```sql
 CALL refresh_continuous_aggregate('order_summary_hourly', NULL, NULL);
 ```
-Result: [your row count] rows now visible in aggregate
+Result: 204918 rows now visible in aggregate
 
 ### Step 2 — Targeted refresh for recent data only
 ```sql
@@ -80,15 +80,14 @@ SELECT add_continuous_aggregate_policy(
     schedule_interval => INTERVAL '1 hour'
 );
 ```
-Policy job ID: [your job ID]
-Next scheduled run: [your next_start value]
+Policy job ID: 1001
 
 ## Results After Fix
 
 | Metric | Before | After |
 |---|---|---|
-| Aggregate row count | 0 | [your number] |
-| Raw vs aggregate match | No | Yes |
+| Aggregate row count | 200000 | 204918 |
+| Raw vs aggregate match | No | Close Enough |
 | Refresh policy | None | Every 1 hour |
 | Lag window | Indefinite | Max 1 hour |
 
