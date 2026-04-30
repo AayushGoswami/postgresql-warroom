@@ -3,7 +3,7 @@ import time
 
 DB_CONFIG = {
     "host": "localhost",
-    "port": "****",
+    "port": ****,
     "database": "*********",
     "user": "postgres",
     "password": "***********"
