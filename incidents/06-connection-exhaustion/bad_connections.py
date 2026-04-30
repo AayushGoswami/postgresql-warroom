@@ -3,11 +3,12 @@ import time
 
 DB_CONFIG = {
     "host": "localhost",
-    "port": 5433,
-    "database": "warroom",
+    "port": "****",
+    "database": "*********",
     "user": "postgres",
-    "password": "warroom123"
+    "password": "***********"
 }
+#Replace the *s with your own credentials
 
 connections = []
 
