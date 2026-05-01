@@ -12,7 +12,7 @@
 
 ## Window Function Queries
 
-### Query 1 - Revenue Ranking per Region (RANK)
+### [Query 1 - Revenue Ranking per Region (RANK)](./queries.sql#L3)
 
 Ranks monthly revenue per region using RANK() with PARTITION BY.
 
@@ -20,7 +20,6 @@ Ranks monthly revenue per region using RANK() with PARTITION BY.
 * Execution time after partial index on status='completed': 84.861 ms
 * Improvement: **~6.5 x faster**
 
-### Query 2 - Month-over-Month Change (LAG)
 ### [Query 2 — Month-over-Month Revenue Change (LAG)](./queries.sql#L36)
 
 Calculates revenue growth rate between consecutive months.
@@ -28,21 +27,21 @@ Uses LAG() to access previous row values within ordered window.
 
 * Execution time: 103.562 ms
 
-### Query 3 - Running Total Revenue (SUM OVER)
+### [Query 3 - Running Total Revenue (SUM OVER)](./queries.sql#L64)
 
 Computes cumulative revenue per region across weeks.
 Uses ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW frame.
 
 * Execution time: 61.952 ms
 
-### Query 4 - Customer Tier Segmentation (NTILE)
+### [Query 4 - Customer Tier Segmentation (NTILE)](./queries.sql#L87)
 
 Segments customers into quartiles by lifetime value.
 
 * Platinum customers (top 25%): 125
 * Bronze customers (bottom 25%): 125
 
-### Query 5 - Order Gap Analysis (LEAD/LAG)
+### [Query 5 - Order Gap Analysis (LEAD/LAG)](./queries.sql#L162)
 
 Calculates days between consecutive orders per customer.
 Useful for churn detection and re-engagement targeting.
@@ -51,14 +50,14 @@ Useful for churn detection and re-engagement targeting.
 
 ## CTE Queries
 
-### Query 6 - Top 3 Products per Region (Multi-level CTE)
+### [Query 6 - Top 3 Products per Region (Multi-level CTE)](./queries.sql#L88)
 
 Three chained CTEs: regional_sales → ranked_products → top_products.
 Final result joined to products table for readable names.
 
 * Execution time: 106.462 ms
 
-### Query 7 - Statistical Anomaly Detection (CROSS JOIN CTE)
+### [Query 7 - Statistical Anomaly Detection (CROSS JOIN CTE)](./queries.sql#L230)
 
 Flags orders more than 2 standard deviations above the mean.
 Uses z-score formula across a CROSS JOIN with aggregate stats.
@@ -66,7 +65,7 @@ Uses z-score formula across a CROSS JOIN with aggregate stats.
 * Flagged orders found: 20
 * Threshold (avg + 2*stddev): 6911.80
 
-### Query 8 - Recursive Order Sequence (Recursive CTE)
+### [Query 8 - Recursive Order Sequence (Recursive CTE)](./queries.sql#L265)
 
 Builds each customer's complete order history sequentially.
 Most complex query - recursive CTE with ordered self-join.
