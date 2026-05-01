@@ -18,7 +18,7 @@ Ranks monthly revenue per region using RANK() with PARTITION BY.
 
 * Execution time before index: 553.154 ms
 * Execution time after partial index on status='completed': 84.861 ms
-* Improvement: **~ 6.5 x faster**
+* Improvement: **~6.5 x faster**
 
 ### Query 2 - Month-over-Month Change (LAG)
 
@@ -77,7 +77,7 @@ Replaced with ROW_NUMBER() + SUM() OVER() window functions which produce identic
 
 * New Execution time: 34.159 ms
 
-* Improvement: **~ 1820 x faster**
+* Improvement: **~1820 x faster**
 
 **Lesson**: recursive CTEs are powerful but should only be used when the data is genuinely
 hierarchical (e.g. org charts, category trees). Sequential order analysis is better served by window functions.
