@@ -50,7 +50,7 @@ Useful for churn detection and re-engagement targeting.
 
 ## CTE Queries
 
-### [Query 6 - Top 3 Products per Region (Multi-level CTE)](./queries.sql#L88)
+### [Query 6 - Top 3 Products per Region (Multi-level CTE)](./queries.sql#L188)
 
 Three chained CTEs: regional_sales → ranked_products → top_products.
 Final result joined to products table for readable names.
