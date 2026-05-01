@@ -20,7 +20,7 @@ Ranks monthly revenue per region using RANK() with PARTITION BY.
 * Execution time after partial index on status='completed': 84.861 ms
 * Improvement: **~6.5 x faster**
 
-### [Query 2 — Month-over-Month Revenue Change (LAG)](./queries.sql#L36)
+### [Query 2 - Month-over-Month Revenue Change (LAG)](./queries.sql#L36)
 
 Calculates revenue growth rate between consecutive months.
 Uses LAG() to access previous row values within ordered window.
