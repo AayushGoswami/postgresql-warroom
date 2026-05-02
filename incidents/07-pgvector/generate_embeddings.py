@@ -4,10 +4,10 @@ import math
 
 DB_CONFIG = {
     "host": "localhost",
-    "port": 5433,
-    "database": "warroom",
+    "port": ****,
+    "database": "********",
     "user": "postgres",
-    "password": "warroom123"
+    "password": "**************"
 }
 
 def normalize_vector(vec):
