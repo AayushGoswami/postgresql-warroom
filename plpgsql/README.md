@@ -10,7 +10,7 @@ demonstrating real-world database automation patterns.
 
 ---
 
-## Function 1 — detect_anomalous_orders()
+## [Function 1 — detect_anomalous_orders()](./functions.sql#L2-L62)
 
 ### Purpose
 Identifies statistically anomalous orders using z-score analysis.
@@ -38,7 +38,7 @@ SELECT * FROM detect_anomalous_orders(
 
 ---
 
-## Function 2 — get_monthly_summary()
+## [Function 2 — get_monthly_summary()](./functions.sql#L65-L116)
 
 ### Purpose
 Returns pre-formatted revenue summary for any given month
@@ -57,7 +57,7 @@ SELECT * FROM get_monthly_summary(p_year INT, p_month INT);
 
 ---
 
-## Procedure — archive_old_orders()
+## [Procedure — archive_old_orders()](./functions.sql#L119-L184)
 
 ### Purpose
 Safely archives old cancelled and refunded orders to a
@@ -86,7 +86,7 @@ CALL archive_old_orders(
 
 ---
 
-## Trigger — trg_audit_order_deletion
+## [Trigger — trg_audit_order_deletion](./functions.sql#L187-L245)
 
 ### Purpose
 Automatically captures every DELETE on order_events into
@@ -113,7 +113,29 @@ ORDER BY deleted_at DESC;
 
 ---
 
-## Complete Object Inventory
+## Known Issue — Tuple Decompression Limit
+
+When running archive_old_orders() on a compressed hypertable,
+the following error may occur if eligible rows exceed 100,000:
+
+    ERROR: tuple decompression limit exceeded by operation
+    DETAIL: current limit: 100000, tuples decompressed: 116856
+    HINT: Consider increasing timescaledb.max_tuples_decompressed_per_dml_transaction
+
+### Root Cause
+TimescaleDB enforces a default limit of 100,000 decompressed
+tuples per DML transaction to protect against memory pressure.
+Bulk DELETEs on compressed hypertables trigger this when the
+row count exceeds the limit.
+
+### Fix Applied
+```sql
+SET timescaledb.max_tuples_decompressed_per_dml_transaction = 0;
+```
+0 means unlimited — no decompression cap.
+---
+
+## [Complete Object Inventory](./functions.sql#L247-L262)
 
 ### Functions
 - detect_anomalous_orders(text, numeric) → SETOF record
