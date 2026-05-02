@@ -113,6 +113,28 @@ ORDER BY deleted_at DESC;
 
 ---
 
+## Known Issue — Tuple Decompression Limit
+
+When running archive_old_orders() on a compressed hypertable,
+the following error may occur if eligible rows exceed 100,000:
+
+    ERROR: tuple decompression limit exceeded by operation
+    DETAIL: current limit: 100000, tuples decompressed: 116856
+    HINT: Consider increasing timescaledb.max_tuples_decompressed_per_dml_transaction
+
+### Root Cause
+TimescaleDB enforces a default limit of 100,000 decompressed
+tuples per DML transaction to protect against memory pressure.
+Bulk DELETEs on compressed hypertables trigger this when the
+row count exceeds the limit.
+
+### Fix Applied
+```sql
+SET timescaledb.max_tuples_decompressed_per_dml_transaction = 0;
+```
+0 means unlimited — no decompression cap.
+---
+
 ## [Complete Object Inventory](./functions.sql#L247-L262)
 
 ### Functions
