@@ -127,8 +127,8 @@ Before any database migration, always:
   and the extension created before running pg_restore
 
 ## Reusable Scripts
-- backup.bat [database_name] — timestamped automated backup script
-- restore_table.bat [table_name] [backup_file] [target_database] — single table restore utility
+- [backup.bat](backup.bat) [database_name] — timestamped automated backup script
+- [restore_table.bat](restore_table.bat) [table_name] [backup_file] [target_database] — single table restore utility
 
 ## Key Commands Reference
 ```cmd
