@@ -59,7 +59,7 @@ WHERE c.hypertable_name = 'order_events'
   AND c.range_end < NOW() - INTERVAL '30 days'
   AND c.is_compressed = false;
 ```
-Chunks compressed: [your number]
+Chunks compressed: 53
 
 ### Step 3 — Add automated compression policy
 ```sql
@@ -72,7 +72,7 @@ Future chunks older than 30 days will compress automatically.
 | Metric | Before | After |
 |---|---|---|
 | Total size | 48 MB | 20 MB |
-| Compressed chunks | 0 | 100 |
+| Compressed chunks | 0 | 53 |
 | Average savings per chunk | — | 60 % |
 
 ## Important — Compressed Data Remains Queryable
