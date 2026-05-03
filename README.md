@@ -96,14 +96,14 @@ SELECT COUNT(*) FROM order_events;
 
 | # | Incident | Category | Key Skills Demonstrated |
 |---|---|---|---|
-| [01](#incident-01--slow-query) | Slow Query - Missing Index | Query Optimization | EXPLAIN ANALYZE, composite indexing, Seq Scan vs Index Scan |
-| [02](#incident-02--table-bloat) | Table Bloat & VACUUM | Maintenance | MVCC, pg_stat_user_tables, VACUUM vs VACUUM FULL |
-| [03](#incident-03--lock-contention) | Lock Contention & Deadlock | Concurrency | pg_stat_activity, pg_locks, pg_blocking_pids, deadlock detection |
-| [04](#incident-04--timescaledb-compression) | TimescaleDB Chunk Compression | TimescaleDB | compress_chunk, compression policies, storage savings measurement |
-| [05](#incident-05--continuous-aggregate-lag) | Continuous Aggregate Lag | TimescaleDB | refresh_continuous_aggregate, aggregate policies, lag diagnosis |
-| [06](#incident-06--connection-exhaustion) | Connection Pool Exhaustion | Infrastructure | pg_stat_activity, pg_terminate_backend, psycopg2 connection pooling |
-| [07](#incident-07--pgvector-slowdown) | pgvector AI Query Slowdown | AI / pgvector | IVFFlat index, HNSW index, cosine similarity, hybrid SQL+vector search |
-| [08](#incident-08--backup-and-restore) | Backup, Restore & Migration | Operations | pg_dump, pg_restore, partial restore, TimescaleDB restore procedure |
+| [01](#incident-01---slow-query) | Slow Query - Missing Index | Query Optimization | EXPLAIN ANALYZE, composite indexing, Seq Scan vs Index Scan |
+| [02](#incident-02---table-bloat) | Table Bloat & VACUUM | Maintenance | MVCC, pg_stat_user_tables, VACUUM vs VACUUM FULL |
+| [03](#incident-03---lock-contention) | Lock Contention & Deadlock | Concurrency | pg_stat_activity, pg_locks, pg_blocking_pids, deadlock detection |
+| [04](#incident-04---timescaledb-compression) | TimescaleDB Chunk Compression | TimescaleDB | compress_chunk, compression policies, storage savings measurement |
+| [05](#incident-05---continuous-aggregate-lag) | Continuous Aggregate Lag | TimescaleDB | refresh_continuous_aggregate, aggregate policies, lag diagnosis |
+| [06](#incident-06---connection-exhaustion) | Connection Pool Exhaustion | Infrastructure | pg_stat_activity, pg_terminate_backend, psycopg2 connection pooling |
+| [07](#incident-07---pgvector-ai-query-slowdown) | pgvector AI Query Slowdown | AI / pgvector | IVFFlat index, HNSW index, cosine similarity, hybrid SQL+vector search |
+| [08](#incident-08---backup--restore) | Backup, Restore & Migration | Operations | pg_dump, pg_restore, partial restore, TimescaleDB restore procedure |
 
 ---
 
@@ -165,7 +165,7 @@ SELECT COUNT(*) FROM order_events;
 
 ---
 
-## Incident 05 - [Continuous Aggregate Lag](incidents/05-continuous-aggregate)
+## [Incident 05 - Continuous Aggregate Lag](incidents/05-continuous-aggregate)
 **Category:** TimescaleDB
 
 **Symptom:** Customer reports analytics dashboard showing stale or missing data.
